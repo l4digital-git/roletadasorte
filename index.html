@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>roleta</title>
+    <script src="jquery.js"></script>
+    <script src="phaser.js"></script>
+
+    <style>
+      body {
+        text-align: center;
+        /* background-image: url(Fundo.png);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover; */
+        background-color: #00b140;
+        overflow: hidden;
+      }
+
+      #dwheel {
+        display: inline-block;
+        padding: 0px;
+        margin: 0 auto;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="dwheel"></div>
+
+    <script>
+      window.multiplicador = 2;
+      window.tempo = 8000;
+      var game = new Phaser.Game(1080, 1920, Phaser.AUTO, "dwheel", null, true);
+      var dwheel = {};
+
+      var wheelstarted = false;
+
+      var randomstops = [
+        { rot: 550, value: 1 },
+        { rot: 600, value: 1 },
+        { rot: 650, value: 1 },
+        { rot: 700, value: 1 },
+        { rot: 750, value: 1 },
+        { rot: 800, value: 1 },
+        { rot: 850, value: 1 },
+        { rot: 900, value: 1 },
+        { rot: 950, value: 1 },
+        { rot: 1000, value: 1 },
+        { rot: 1050, value: 1 },
+        { rot: 1100, value: 1 },
+        { rot: 1150, value: 1 },
+        { rot: 1200, value: 1 },
+        { rot: 1250, value: 1 },
+        { rot: 1300, value: 1 },
+        { rot: 1350, value: 1 },
+        { rot: 1400, value: 1 },
+        { rot: 1450, value: 1 },
+        { rot: 1500, value: 1 },
+        { rot: 1550, value: 1 },
+        { rot: 1620, value: 1 },
+      ];
+
+      dwheel.Main = {
+        preload: function () {
+          game.load.image("wheel", "Wheel.png");
+          game.load.image("needle", "Needle.png");
+        },
+        create: function () {
+          base = game.add.sprite(game.width / 2, game.height / 2, "base");
+          base.anchor.setTo(0.5);
+          base.scale.setTo(1.35);
+
+          wheel = game.add.sprite(
+            game.width / 2,
+            game.height / 2 - 20,
+            "wheel"
+          );
+          wheel.anchor.setTo(0.5);
+          wheel.scale.setTo(0.5);
+          game.stage.inputEnabled = true;
+
+          wheel.inputEnabled = true;
+          wheel.events.onInputDown.add(roda);
+
+          needle = game.add.sprite(
+            game.width / 2,
+            game.height / 2 - 345,
+            "needle"
+          );
+          needle.anchor.setTo(0.5);
+          needle.scale.setTo(0.5);
+
+          roda();
+
+          function roda() {
+            if (!wheelstarted) {
+              wheelstarted = true;
+              var randomnumber = game.rnd.integerInRange(
+                0,
+                randomstops.length - 1
+              );
+              game.add
+                .tween(wheel)
+                .to(
+                  {
+                    angle:
+                      randomstops[randomnumber].rot *
+                      (window.multiplicador + Math.random() * 2.0),
+                  },
+                  window.tempo,
+                  "Cubic",
+                  true
+                )
+                .onComplete.add(function () {
+                  console.log(
+                    "Parou em" + randomstops[randomnumber].value + "!"
+                  );
+                  wheelstarted = false;
+                });
+            }
+          }
+        },
+      };
+
+      game.state.add("Main", dwheel.Main);
+      game.state.start("Main");
+    </script>
+  </body>
+</html>
