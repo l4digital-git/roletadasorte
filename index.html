@@ -22,7 +22,7 @@
         display: inline-block;
         padding: 0px;
         margin: 0 auto;
-        height: 100%;
+        height: 50%;
       }
     </style>
   </head>
@@ -32,7 +32,7 @@
     <script>
       window.multiplicador = 2;
       window.tempo = 8000;
-      var game = new Phaser.Game(1080, 1920, Phaser.AUTO, "dwheel", null, true);
+      var game = new Phaser.Game(2000, 2000, Phaser.AUTO, "dwheel", null, true);
       var dwheel = {};
 
       var wheelstarted = false;
@@ -68,9 +68,9 @@
           game.load.image("needle", "Needle.png");
         },
         create: function () {
-          base = game.add.sprite(game.width / 2, game.height / 2, "base");
+          base = game.add.sprite(game.width / 1, game.height / 1, "base");
           base.anchor.setTo(0.5);
-          base.scale.setTo(1.35);
+          base.scale.setTo(0.5);
 
           wheel = game.add.sprite(
             game.width / 2,
